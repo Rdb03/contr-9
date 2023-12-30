@@ -5,7 +5,7 @@ export interface ICategory {
   type: TCategoriesTypes;
   name: string;
 }
-export type TCategoryApi = Omit<ICategory, 'id'>;
+export type TCategoryMutation = Omit<ICategory, 'id'>;
 
 export interface ICategoriesList {
   [id: string]: ICategoryApi;

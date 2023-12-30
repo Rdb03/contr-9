@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {ICategoriesList, ICategory} from '../type';
+import {ICategoriesList, ICategory, TCategoryMutation} from '../type';
 import axiosApi from '../axiosApi.ts';
 
 export const fetchCategories = createAsyncThunk<ICategory[]>(
@@ -20,9 +20,21 @@ export const fetchCategories = createAsyncThunk<ICategory[]>(
   }
 );
 
+interface Params {
+    category: TCategoryMutation;
+    id: string,
+}
+
+export const createCategory = createAsyncThunk<void, TCategoryMutation>(
+    'categories/create',
+    async (category) => {
+        await axiosApi.post('/categories.json', category);
+    }
+);
+
 export const deleteCategories = createAsyncThunk<void, string>(
   'categories/delete',
   async (id) =>{
     await axiosApi.delete(`/categories/${id}.json`);
   }
-)
+);

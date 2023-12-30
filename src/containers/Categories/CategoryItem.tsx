@@ -14,9 +14,9 @@ const CategoryItem: React.FC<Props> = ({category}) => {
   const dispatch = useAppDispatch();
   const deleteCategory = useAppSelector(selectDeleteCategoriesLoading);
 
-  const getTypeColor = () => {
+  const getTypeColor = (): string => {
     return category.type === "income" ? "green" : "red";
-  }
+  };
 
   const onDelete = async () => {
     if (window.confirm("Вы точно хотите удалить запись?")) {
@@ -24,6 +24,8 @@ const CategoryItem: React.FC<Props> = ({category}) => {
       await dispatch(fetchCategories());
     }
   };
+
+  console.log(deleteCategory);
 
   return (
     <ListGroup.Item className="d-flex justify-content-between align-items-center">
@@ -35,8 +37,15 @@ const CategoryItem: React.FC<Props> = ({category}) => {
                      { category.type }
                   </span>
         <div>
-          <button className="btn btn-warning me-3">Edit</button>
-          <button className="btn btn-danger" onClick={onDelete} disabled={!!deleteCategory}>
+          <button
+              className="btn btn-warning me-3"
+          >
+              Edit
+          </button>
+          <button
+              className="btn btn-danger"
+              onClick={onDelete}
+          >
             {deleteCategory && deleteCategory === category.id ? <ButtonSpinner/> : null}
             Delete
           </button>
