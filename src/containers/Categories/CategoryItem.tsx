@@ -3,7 +3,7 @@ import {ICategory} from '../../type';
 import * as React from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/hook.ts';
 import {deleteCategories, fetchCategories} from '../../store/categoriesThunk.ts';
-import {selectDeleteCategoriesLoading} from '../../store/categoriesSlice.ts';
+import {openModal, selectDeleteCategoriesLoading, setCategory} from '../../store/categoriesSlice.ts';
 import ButtonSpinner from '../../components/Spinner/ButtonSpinner.tsx';
 
 interface Props {
@@ -25,7 +25,10 @@ const CategoryItem: React.FC<Props> = ({category}) => {
     }
   };
 
-  console.log(deleteCategory);
+  const handleOpenModal = () => {
+    dispatch(openModal());
+    dispatch(setCategory(category));
+  };
 
   return (
     <ListGroup.Item className="d-flex justify-content-between align-items-center">
@@ -39,6 +42,7 @@ const CategoryItem: React.FC<Props> = ({category}) => {
         <div>
           <button
               className="btn btn-warning me-3"
+              onClick={handleOpenModal}
           >
               Edit
           </button>

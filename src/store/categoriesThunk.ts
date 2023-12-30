@@ -20,17 +20,25 @@ export const fetchCategories = createAsyncThunk<ICategory[]>(
   }
 );
 
-interface Params {
-    category: TCategoryMutation;
-    id: string,
-}
-
 export const createCategory = createAsyncThunk<void, TCategoryMutation>(
     'categories/create',
     async (category) => {
         await axiosApi.post('/categories.json', category);
     }
 );
+
+interface Params {
+    category: TCategoryMutation;
+    id: string,
+}
+
+export const updateCategory= createAsyncThunk<void, Params> (
+    'categories/update',
+    async (prams)   => {
+        await axiosApi.put(`/categories/${prams.id}.json`, prams.category);
+    }
+);
+
 
 export const deleteCategories = createAsyncThunk<void, string>(
   'categories/delete',

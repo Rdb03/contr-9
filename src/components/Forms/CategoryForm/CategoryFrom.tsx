@@ -1,17 +1,16 @@
 import {Button, Spinner} from "react-bootstrap";
-import {useAppDispatch} from "../../../app/hook.ts";
-import {closeModal} from "../../../store/categoriesSlice.ts";
 import React, {useState} from "react";
-import {TCategoryMutation} from "../../../type";
+import {ICategory, TCategoryMutation} from "../../../type";
 
 interface Props {
     onSubmit: (category: TCategoryMutation) => void;
+    onClose: () => void;
     loading: boolean;
+    category: ICategory | null;
 }
 
-const CategoryFrom: React.FC<Props>= ({onSubmit, loading}) => {
-    const dispatch = useAppDispatch();
-    const [formState, setFormState] = useState<TCategoryMutation>({
+const CategoryFrom: React.FC<Props>= ({onSubmit, loading, onClose, category}) => {
+    const [formState, setFormState] = useState<TCategoryMutation>( category || {
        type: 'income',
         name: ''
     });
@@ -30,10 +29,6 @@ const CategoryFrom: React.FC<Props>= ({onSubmit, loading}) => {
         }));
     };
 
-    const handleClose = () => {
-        dispatch(closeModal());
-    };
-
     return (
         <form onSubmit={onFormSubmit}>
             <div className="mb-3">
@@ -46,7 +41,7 @@ const CategoryFrom: React.FC<Props>= ({onSubmit, loading}) => {
                     onChange={onChange}
                 >
                     <option value="income">Income</option>
-                    <option value="expanse">Expanse</option>
+                    <option value="expense">Expense</option>
                 </select>
             </div>
             <div className="mb-3">
@@ -64,7 +59,7 @@ const CategoryFrom: React.FC<Props>= ({onSubmit, loading}) => {
             </div>
 
             <div className="d-flex justify-content-end"></div>
-            <Button variant="secondary" className="mr-2" onClick={handleClose}>Close</Button>
+            <Button variant="secondary" className="mr-2" onClick={onClose}>Close</Button>
             <Button className="ms-2" variant="primary" type="submit" disabled={loading}>
                 {loading && <Spinner/>}
                 Submit

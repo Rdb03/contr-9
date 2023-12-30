@@ -5,6 +5,7 @@ import {RootState} from '../app/store.ts';
 
 interface CategoryState {
   items: ICategory[];
+  category: ICategory | null;
   fetchLoading: boolean;
   updateLoading: boolean
   deleteLoading: string | false;
@@ -14,6 +15,7 @@ interface CategoryState {
 
 const initialState: CategoryState = {
   items: [],
+  category: null,
   fetchLoading: false,
   updateLoading: false,
   deleteLoading: false,
@@ -30,6 +32,9 @@ const categoriesSlice  = createSlice({
     },
     closeModal: (state) => {
       state.isModalOpen = false;
+    },
+    setCategory: (state, {payload: category}) => {
+      state.category = category;
     }
   },
   extraReducers: (builder) => {
@@ -65,9 +70,11 @@ const categoriesSlice  = createSlice({
 });
 
 export const categoryReducer = categoriesSlice.reducer;
-export const {openModal, closeModal} = categoriesSlice.actions;
+export const {openModal, closeModal, setCategory} = categoriesSlice.actions;
 export const selectCategories = (state: RootState) => state.categories.items;
 export const selectFetchCategoriesLoading = (state: RootState) => state.categories.fetchLoading;
+export const selectCategory = (state: RootState) => state.categories.category;
 export const selectDeleteCategoriesLoading = (state: RootState) => state.categories.deleteLoading;
 export const selectCreateCategoriesLoading = (state: RootState) => state.categories.createLoading;
 export const  selectIsModalOpen  = (state: RootState) => state.categories.isModalOpen;
+export const selectUpdateCategoryLoading = (state: RootState) => state.categories.updateLoading;
