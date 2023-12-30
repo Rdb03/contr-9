@@ -32,7 +32,7 @@ const Categories = () => {
         fetchLoading
           ? <Spinner/> :
           <ListGroup>
-            {categories.map((category) => <CategoryItem category={category}/>)}
+            {categories.map((category, index) => <CategoryItem key={index} category={category}/>)}
           </ListGroup>
       }
 
